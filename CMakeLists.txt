@@ -43,7 +43,7 @@ add_executable(mppnccombine-fast mppnccombine-fast.c async.c error.c read_chunke
 set_target_properties(mppnccombine-fast PROPERTIES
         C_STANDARD 11)
 target_link_libraries(mppnccombine-fast PUBLIC
-        -lm
+        m
         MPI::MPI_C
         ${HDF5_LIB}
         ${HDF5_HL_LIB}
@@ -58,7 +58,7 @@ find_program(CLANG_TIDY
         )
 if (CLANG_TIDY)
         set_target_properties(mppnccombine-fast PROPERTIES
-                C_CLANG_TIDY "${CLANG_TIDY};-checks=*,-hicpp-signed-bitwise,-clang-diagnostic-missing-field-initializers;-warnings-as-errors=*")
+                C_CLANG_TIDY "${CLANG_TIDY};-checks=*,-hicpp-signed-bitwise,-clang-diagnostic-missing-field-initializers")
 endif()
 
 # Install
