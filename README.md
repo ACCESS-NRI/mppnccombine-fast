@@ -1,5 +1,4 @@
 # mppnccombine-fast
-[![Build Status](https://travis-ci.org/coecms/mppnccombine-fast.svg?branch=master)](https://travis-ci.org/coecms/mppnccombine-fast)
 [![DOI](https://zenodo.org/badge/131938571.svg)](https://zenodo.org/badge/latestdoi/131938571)
 
 An accelerated version of the `mppnccombine` post-processing tool for MOM

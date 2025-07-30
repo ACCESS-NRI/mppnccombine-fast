@@ -1,0 +1,10 @@
+name: Build
+on:
+  pull_request:
+jobs:
+  ci:
+    name: CI
+    uses: access-nri/build-ci/.github/workflows/ci.yml@v2
+    with:
+      spack-manifest-path: .github/build-ci/manifests/spack.yaml.j2
+      allow-ssh-into-spack-install: false
