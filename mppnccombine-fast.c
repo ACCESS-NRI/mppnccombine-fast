@@ -16,7 +16,7 @@
  * limitations under the License.
  * BLAH
  */
-
+#include "blah.h"
 #include "netcdf.h"
 #include <argp.h>
 #include <assert.h>
