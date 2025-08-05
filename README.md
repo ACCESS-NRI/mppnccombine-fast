@@ -1,6 +1,9 @@
 # mppnccombine-fast
 [![DOI](https://zenodo.org/badge/131938571.svg)](https://zenodo.org/badge/latestdoi/131938571)
 
+[![Build](https://github.com/ACCESS-NRI/mppnccombine-fast/actions/workflows/ci.yml/badge.svg)](https://github.com/ACCESS-NRI/mppnccombine-fast/actions/workflows/ci.yml)
+[![Docs](https://app.readthedocs.org/projects/mppnccombine-fast/badge/)](https://mppnccombine-fast.readthedocs.io/en/latest/)
+
 An accelerated version of the `mppnccombine` post-processing tool for MOM
 
 Uses HDF5's raw IO functions to speed up collating large datasets - a 0.1
