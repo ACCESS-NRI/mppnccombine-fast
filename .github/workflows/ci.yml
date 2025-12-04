@@ -8,3 +8,7 @@ jobs:
     with:
       spack-manifest-path: .github/build-ci/manifests/spack.yaml.j2
       allow-ssh-into-spack-install: false
+      # builtin-spack-packages-ref: develop
+      # access-spack-packages-ref: api-v2
+      # spack-config-ref: main
+      # spack-ref: releases/v1.1
