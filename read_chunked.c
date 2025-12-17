@@ -259,8 +259,8 @@ void copy_hdf5_variable_chunks(
     n_chunks *= chunk_decomp[d];
   }
 
-  // Buffer
-  size_t n_buffer = 1024 ^ 3;
+  // 100 MB Buffer
+  size_t n_buffer = 100 * 1024 * 1024;
   void *buffer = malloc(n_buffer);
 
   hsize_t copy_out_offset[ndims];
