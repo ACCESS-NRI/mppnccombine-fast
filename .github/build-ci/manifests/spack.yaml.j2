@@ -1,6 +1,14 @@
 spack:
   specs:
-  - mppnccombine-fast@git.{{ ref }} %intel@2021.10.0
+  - mppnccombine-fast@git.{{ ref }}
+  packages:
+    intel-oneapi-compilers-classic:
+      require:
+      - '@{{ intel_compiler_version }}'
+    all:
+      require:
+      - '%access_intel'
+      - 'target={{ target }}'
   concretizer:
     unify: false
   view: false
