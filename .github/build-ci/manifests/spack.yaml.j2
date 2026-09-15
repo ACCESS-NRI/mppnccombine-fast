@@ -1,14 +1,7 @@
 spack:
+  include:
+  # Include configuration from this repository, with the environment variable defined in build-ci
+  - path: $SPACK_MANIFEST_REPOSITORY_PATH/.github/build-ci/config
   specs:
-  - mppnccombine-fast@git.{{ ref }}
-  packages:
-    intel-oneapi-compilers-classic:
-      require:
-      - '@{{ intel_compiler_version }}'
-    all:
-      require:
-      - '%access_intel'
-      - 'target={{ target }}'
-  concretizer:
-    unify: false
+  - mppnccombine-fast@git.{{ ref }} %%access_intel
   view: false
