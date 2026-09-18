@@ -4,10 +4,9 @@ on:
 jobs:
   ci:
     name: CI
-    uses: access-nri/build-ci/.github/workflows/ci.yml@v3
+    uses: access-nri/build-ci/.github/workflows/ci.yml@v4
     with:
       spack-manifest-path: .github/build-ci/manifests/spack.yaml.j2
-      spack-manifest-data-path: .github/build-ci/data/standard.json
       allow-ssh-into-spack-install: false
-      # Default args (including explicit spack/spack-packages/spack-config versions)
-      # are specified in https://github.com/ACCESS-NRI/build-ci/tree/v3/.github/workflows#inputs
+      # Default args (including explicit spack/spack-config versions)
+      # are specified in https://github.com/ACCESS-NRI/build-ci/tree/v4/.github/workflows#inputs
