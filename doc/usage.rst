@@ -35,6 +35,15 @@ issues when there are thousands of input files)::
 
     mpirun -n 2 mppnccombine-fast --output output.nc input.nc.\*
 
+Missing tiles
+-------------
+
+Some MOM runs use a mask table to skip tiles that are entirely land, so
+no file is written for those tiles. Regions of collated variables that
+no input file covers are filled with the variable's ``_FillValue``
+where one is declared. Where none is declared (as in MOM6 restart
+files), they are filled with zero, matching ``mppnccombine``.
+
 Changing compression settings
 -----------------------------
 

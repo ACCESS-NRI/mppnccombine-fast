@@ -67,7 +67,7 @@ def split_dataset(data, split):
     return out
 
 
-def split_file(tmpdir, data, split):
+def split_file(tmpdir, data, split, fill_value=None):
     i = 0
     infiles = []
     for start in range(0, len(data['x']), split['x']):
@@ -82,6 +82,7 @@ def split_file(tmpdir, data, split):
                     'zlib': True,
                     'shuffle': True,
                     'complevel': 4,
+                    '_FillValue': fill_value,
                     },
                     }
                 )
@@ -154,6 +155,43 @@ def test_split_off_boundary(tmpdir):
     assert (c.a.data == d.a.data).all()
     assert (c.x.data == d.x.data).all()
     
+@pytest.mark.parametrize('fill_value, expected', [
+    (None, 0.0),
+    (-1.0e20, -1.0e20),
+])
+def test_missing_tile(tmpdir, fill_value, expected):
+    """
+    A tile eliminated by a mask table is never written, so its region of the
+    collated output is covered by no input file. Those cells should take the
+    declared _FillValue, or zero if none is declared.
+    """
+    d = xarray.Dataset(
+            {
+                'a': (['x'], np.ones(6))
+            },
+            coords = {
+                'x': np.arange(6),
+            })
+
+    infiles = split_file(tmpdir, d, {'x': 2}, fill_value=fill_value)
+
+    # Drop the middle tile
+    del infiles[1]
+
+    outpath = tmpdir.join('out.nc')
+    run_collate(infiles, outpath)
+
+    with netCDF4.Dataset(str(outpath)) as nc:
+        a = nc.variables['a']
+        a.set_auto_mask(False)
+        numpy.testing.assert_array_equal(a[:], [1, 1, expected, expected, 1, 1])
+
+        if fill_value is None:
+            assert '_FillValue' not in a.ncattrs()
+        else:
+            assert a.getncattr('_FillValue') == fill_value
+
+
 def test_different_compression(tmpdir):
     d = xarray.Dataset(
             {
