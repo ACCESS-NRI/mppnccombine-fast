@@ -240,11 +240,25 @@ void init(const char *in_path, const char *out_path,
           nc_def_var_deflate(out_file, out_v, shuffle, deflate, deflate_level));
     }
 
+    bool collated = is_collated(in_file, v);
+
+    // Regions that no input file covers are never written, so NetCDF's prefill
+    // decides what they contain. Where the variable declares a _FillValue, that
+    // value is used. Where it declares none, use zero, consistent with
+    // mppnccombine. nc_def_var_fill also creates a _FillValue attribute, which
+    // is removed so genuine zeros aren't read as missing.
+    if (collated &&
+        nc_inq_att(in_file, v, "_FillValue", NULL, NULL) == NC_ENOTATT) {
+      static const char zero[8] = {0};
+      NCERR(nc_def_var_fill(out_file, out_v, NC_FILL, zero));
+      NCERR(nc_del_att(out_file, out_v, "_FillValue"));
+    }
+
     // Copy attributes
     copy_attrs(out_file, v, in_file, v, natts);
 
     // If the field is not collated copy it now
-    if (!is_collated(in_file, v)) {
+    if (!collated) {
       log_message(LOG_INFO, "Uncollated NetCDF copy of %s", name);
       copy_netcdf(out_file, out_v, in_file, v);
     }
