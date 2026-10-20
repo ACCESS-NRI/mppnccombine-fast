@@ -4,9 +4,11 @@ on:
 jobs:
   ci:
     name: CI
-    uses: access-nri/build-ci/.github/workflows/ci.yml@v4
+    uses: access-nri/build-ci/.github/workflows/ci.yml@post-build-testing/second-job
     with:
       spack-manifest-path: .github/build-ci/manifests/spack.yaml.j2
       allow-ssh-into-spack-install: false
+      enable-pytest: true
+      pytest-requirements-path: requirements.txt
       # Default args (including explicit spack/spack-config versions)
       # are specified in https://github.com/ACCESS-NRI/build-ci/tree/v4/.github/workflows#inputs
