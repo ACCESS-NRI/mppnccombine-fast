@@ -12,5 +12,3 @@ jobs:
       pytest-requirements-path: requirements.txt
       # Default args (including explicit spack/spack-config versions)
       # are specified in https://github.com/ACCESS-NRI/build-ci/tree/v4/.github/workflows#inputs
-    permissions:
-      checks: write
